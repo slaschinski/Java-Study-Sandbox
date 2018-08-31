@@ -24,7 +24,7 @@ public class Neuron {
 
         for (int i = 0; i < numberOfInputs; i++)
         {
-            //weights.add(Random.Range(-0.1f, 0.1f));
+            //weights.add(Random.Range(-0.1d, 0.1d));
             //weights.Add(Random.Range(layerSize, numberOfInputs) * Mathf.Sqrt(2.0f / numberOfInputs));
             weights.add(NextGaussian());
         }
@@ -204,7 +204,7 @@ public class Neuron {
         ArrayList<Double> newWeights = new ArrayList<Double>();
         for (int i = 0; i < weights.size(); i++)
         {
-            newWeights.add(weights.set(i, weights.get(i) + deltas.get(i)));
+            newWeights.add(weights.get(i) + deltas.get(i));
         }
         setWeights(newWeights);
 
