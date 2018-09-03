@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,13 +16,11 @@ import javafx.scene.chart.XYChart.Series;
 import net.laschinski.ann_sandbox.ann.Ann;
 import net.laschinski.ann_sandbox.ann.AnnBuilder;
 
-// https://www.developer.com/java/data/multithreading-in-javafx.html
-
 class TestTask extends Task<Integer> {
-    XYChart<Number, Number> chart;
+    Series<Number, Number> series;
     
-    TestTask(XYChart<Number, Number> chart) {
-    	this.chart = chart;
+    TestTask(Series<Number, Number> series) {
+    	this.series = series;
     }
     
     @Override
@@ -30,49 +29,52 @@ class TestTask extends Task<Integer> {
 				.alphaDecay(0.999d)
 				.lambda(0.0003d)
 				.buildAnn();
-        ann.AddLayer(32, "LeakyReLU");
+        ann.AddLayer(16, "LeakyReLU");
         ann.AddLayer(1, "Sigmoid");
-
-        XYChart.Series<Number, Number> series = new Series<Number, Number>();
-        chart.getData().add(series);
-        series.setName("Testseries");
 	   
-		//updateMessage("    Processing... ");
+		updateMessage("    Processing... ");
 		
 		ArrayList<Double> result;
         
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 100; i++) {
         	double sumSquareError = 0;
             
             result = Train(ann, 1, 1, 0);
             sumSquareError += Math.pow((double)result.get(0) - 0, 2);
-            if (i % 1000 == 0) {
+            if (i % 10 == 0) {
             	System.out.println(" 1 1 " + result.get(0));
             }
             
             result = Train(ann, 1, 0, 1);
             sumSquareError += Math.pow((double)result.get(0) - 1, 2);
-            if (i % 1000 == 0) {
+            if (i % 10 == 0) {
             	System.out.println(" 1 0 " + result.get(0));
             }
             
             result = Train(ann, 0, 1, 1);
             sumSquareError += Math.pow((double)result.get(0) - 1, 2);
-            if (i % 1000 == 0) {
+            if (i % 10 == 0) {
             	System.out.println(" 0 1 " + result.get(0));
             }
             
             result = Train(ann, 0, 0, 0);
             sumSquareError += Math.pow((double)result.get(0) - 0, 2);
-            if (i % 1000 == 0) {
+            if (i % 10 == 0) {
                 System.out.println(" 0 0 " + result.get(0));
             	System.out.println("SSE: " + sumSquareError);
             }
             
-            series.getData().add(new XYChart.Data<Number, Number>(i, sumSquareError));
+            final int iteration = i;
+            final double SSE = sumSquareError;
+            
+            Platform.runLater(new Runnable() {
+            	@Override public void run() {
+            		series.getData().add(new XYChart.Data<Number, Number>(iteration, SSE));
+            	}
+            });
         }
         
-		//updateMessage("    Done.  ");
+		updateMessage("    Done.  ");
 		
 		return 0;
     }
@@ -100,8 +102,12 @@ public class XorController implements Initializable {
     
 	@FXML
 	private void buttonPressed(ActionEvent event) {
+
+        XYChart.Series<Number, Number> series = new Series<Number, Number>();
+        chart.getData().add(series);
+        series.setName("Testseries");
         
-        TestTask task = new TestTask(chart);
+        TestTask task = new TestTask(series);
 
         task.setOnRunning((succeesesEvent) -> {
         });
