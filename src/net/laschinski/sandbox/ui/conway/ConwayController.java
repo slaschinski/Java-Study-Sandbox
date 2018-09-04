@@ -22,14 +22,14 @@ public class ConwayController implements Initializable {
 	private Grid conwayGrid;
 	private GraphicsContext gc;
 	private SimulationTask simulationTask;
-	private int lastMousePosition[] = {-1, -1}; 
-	
+	private int lastMousePosition[] = { -1, -1 };
+
 	@FXML
 	private Button startStopButton;
-	
+
 	@FXML
 	private Canvas canvas;
-	
+
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
 		try {
@@ -40,13 +40,13 @@ public class ConwayController implements Initializable {
 		}
 		gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.BLACK);
-        gc.setStroke(Color.BLACK);
+		gc.setStroke(Color.BLACK);
 		drawGrid();
 		drawCells();
 	}
-	
+
 	@FXML
-	private void toggleCell(MouseEvent event) {
+	private void drawCellsWithMouse(MouseEvent event) {
 		int x = (int)Math.floor(event.getX() / cellSize);
 		int y = (int)Math.floor(event.getY() / cellSize);
 		if (x >= xSize) {
@@ -59,9 +59,11 @@ public class ConwayController implements Initializable {
 		} else if (y < 0) {
 			y = 0;
 		}
-		
 
-		if (x != lastMousePosition[0] || y != lastMousePosition[1]) {
+		if (event.getEventType() == MouseEvent.MOUSE_CLICKED ||
+			x != lastMousePosition[0] ||
+			y != lastMousePosition[1]
+		) {
 			lastMousePosition[0] = x;
 			lastMousePosition[1] = y;
 			if (event.getButton() == MouseButton.PRIMARY) {
@@ -78,7 +80,7 @@ public class ConwayController implements Initializable {
 		if (simulationTask == null || !simulationTask.running) {
 			startStopButton.setText("Stop simulation");
 			simulationTask = new SimulationTask(this, conwayGrid);
-	
+
 			ExecutorService executorService = Executors.newFixedThreadPool(1);
 			executorService.execute(simulationTask);
 			executorService.shutdown();
@@ -87,15 +89,15 @@ public class ConwayController implements Initializable {
 			simulationTask.running = false;
 		}
 	}
-	
+
 	public void drawCells() {
 		boolean[][] cells = conwayGrid.getCells();
-		
+
 		for (int x = 0; x < cells.length; x++) {
 			for (int y = 0; y < cells[x].length; y++) {
 				gc.clearRect(x * cellSize + 3, y * cellSize + 3, cellSize - 3, cellSize - 3);
 				if (cells[x][y]) {
-					gc.fillOval(x * cellSize + 3, y * cellSize + 3, cellSize - 4, cellSize -4);
+					gc.fillOval(x * cellSize + 3, y * cellSize + 3, cellSize - 4, cellSize - 4);
 				}
 			}
 		}
@@ -103,12 +105,12 @@ public class ConwayController implements Initializable {
 
 	private void drawGrid() {
 		for (int x = 0; x <= xSize; x++) {
-	        gc.setLineWidth(1);
-	        gc.strokeLine(x * cellSize + 1, 0, x * cellSize + 1, ySize * cellSize + 1);
+			gc.setLineWidth(1);
+			gc.strokeLine(x * cellSize + 1, 0, x * cellSize + 1, ySize * cellSize + 1);
 		}
 		for (int y = 0; y <= ySize; y++) {
-	        gc.setLineWidth(1);
-	        gc.strokeLine(0, y * cellSize + 1, xSize * cellSize + 1, y * cellSize + 1);
+			gc.setLineWidth(1);
+			gc.strokeLine(0, y * cellSize + 1, xSize * cellSize + 1, y * cellSize + 1);
 		}
 	}
 }
