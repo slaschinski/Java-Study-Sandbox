@@ -1,4 +1,4 @@
-package net.laschinski.ann_sandbox.ann;
+package net.laschinski.sandbox.ann;
 
 import java.util.ArrayList;
 

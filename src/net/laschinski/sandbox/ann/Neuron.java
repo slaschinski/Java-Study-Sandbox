@@ -1,8 +1,8 @@
-package net.laschinski.ann_sandbox.ann;
+package net.laschinski.sandbox.ann;
 
 import java.util.ArrayList;
 
-import net.laschinski.ann_sandbox.utils.Random;
+import net.laschinski.sandbox.utils.Random;
 
 public class Neuron {
     public String activationFunction;

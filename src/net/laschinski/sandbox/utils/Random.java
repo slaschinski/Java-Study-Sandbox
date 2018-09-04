@@ -1,4 +1,4 @@
-package net.laschinski.ann_sandbox.utils;
+package net.laschinski.sandbox.utils;
 
 public class Random {
 	public static double Range(double min, double max) {

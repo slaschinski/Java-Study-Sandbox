@@ -1,8 +1,8 @@
-package net.laschinski.ann_sandbox.ann;
+package net.laschinski.sandbox.ann;
 
 import java.util.ArrayList;
 
-public class Ann {
+public class ANN {
 
     /// <summary>
     /// Learning rate
@@ -38,7 +38,7 @@ public class Ann {
     /// <param name="alpha">A double representing the learning rate</param>
     /// <param name="alphaDecay">A double to reduce alpha (and lambda) over time by multiplication</param>
     /// <param name="lambda">A double to reduce weights by the amount of lambda multiplied with the actual weight</param>
-    public Ann(int numberOfInputs, double alpha, double alphaDecay, double lambda)
+    public ANN(int numberOfInputs, double alpha, double alphaDecay, double lambda)
     {
         this.numInputs = numberOfInputs;
         this.alpha = alpha;

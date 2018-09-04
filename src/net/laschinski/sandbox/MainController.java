@@ -1,4 +1,4 @@
-package net.laschinski.ann_sandbox;
+package net.laschinski.sandbox;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class MainController {
 	@FXML
 	private void xorButtonPressed(ActionEvent event) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("XOR.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/net/laschinski/sandbox/ui/xor/XOR.fxml"));
 		    Stage stage = new Stage();
 		    stage.setScene(new Scene(root));
 		    stage.show();

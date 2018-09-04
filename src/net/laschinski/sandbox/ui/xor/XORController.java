@@ -1,4 +1,4 @@
-package net.laschinski.ann_sandbox;
+package net.laschinski.sandbox.ui.xor;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
-import net.laschinski.ann_sandbox.ann.Ann;
-import net.laschinski.ann_sandbox.ann.AnnBuilder;
+import net.laschinski.sandbox.ann.ANN;
+import net.laschinski.sandbox.ann.ANNBuilder;
 
 class TestTask extends Task<Integer> {
     Series<Number, Number> series;
@@ -25,7 +25,7 @@ class TestTask extends Task<Integer> {
     
     @Override
     protected Integer call() throws Exception {
-		Ann ann = new AnnBuilder(2, 0.8d)
+		ANN ann = new ANNBuilder(2, 0.8d)
 				.alphaDecay(0.999d)
 				.lambda(0.0003d)
 				.buildAnn();
@@ -79,7 +79,7 @@ class TestTask extends Task<Integer> {
 		return 0;
     }
     
-	private ArrayList<Double> Train(Ann ann, double i1, double i2, double o)
+	private ArrayList<Double> Train(ANN ann, double i1, double i2, double o)
     {
         ArrayList<Double> inputs = new ArrayList<>();
         ArrayList<Double> outputs = new ArrayList<>();
@@ -90,7 +90,7 @@ class TestTask extends Task<Integer> {
     }
 }
 
-public class XorController implements Initializable {
+public class XORController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)

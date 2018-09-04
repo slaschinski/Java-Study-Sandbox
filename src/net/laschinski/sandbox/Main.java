@@ -1,4 +1,4 @@
-package net.laschinski.ann_sandbox;
+package net.laschinski.sandbox;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

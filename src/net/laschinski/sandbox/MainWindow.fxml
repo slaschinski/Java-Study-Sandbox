@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="50.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.laschinski.ann_sandbox.MainController">
+<AnchorPane prefHeight="50.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.laschinski.sandbox.MainController">
    <children>
       <Button alignment="CENTER" layoutX="53.0" layoutY="13.0" mnemonicParsing="false" onAction="#xorButtonPressed" text="XOR training" />
    </children>
