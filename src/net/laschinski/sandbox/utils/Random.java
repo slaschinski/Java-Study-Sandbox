@@ -5,5 +5,5 @@ public class Random {
 		double random = min + Math.random() * (max - min);
 		return random;
 	}
-	
+
 }
