@@ -4,15 +4,20 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import net.laschinski.sandbox.conway.Grid;
 
 public class ConwayController implements Initializable {
@@ -43,6 +48,10 @@ public class ConwayController implements Initializable {
 		gc.setStroke(Color.BLACK);
 		drawGrid();
 		drawCells();
+	}
+	
+	public void stop(){
+	    System.out.println("Stage is closing");
 	}
 
 	@FXML
@@ -77,6 +86,23 @@ public class ConwayController implements Initializable {
 
 	@FXML
 	private void startStopSimulation(ActionEvent event) {
+	    Node source = (Node) event.getSource();
+	    Window theStage = source.getScene().getWindow();
+
+		EventHandler<WindowEvent> windowEvent = new EventHandler<WindowEvent>() {
+	         @Override
+	         public void handle(WindowEvent event) {
+	             Platform.runLater(new Runnable() {
+	            	 
+	                 @Override
+	                 public void run() {
+	                	 simulationTask.running = false;
+	                 }
+	             });
+	         }
+	     };
+	    theStage.setOnHiding(windowEvent);
+	    
 		if (simulationTask == null || !simulationTask.running) {
 			startStopButton.setText("Stop simulation");
 			simulationTask = new SimulationTask(this, conwayGrid);
