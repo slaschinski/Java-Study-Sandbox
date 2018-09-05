@@ -116,14 +116,16 @@ public class ConwayController implements Initializable {
 	    
 		if (simulationTask == null || !simulationTask.running) {
 			startStopButton.setText("Stop simulation");
+			annCheckbox.setDisable(true);
 			simulationTask = new SimulationTask(this, conwayGrid, annCheckbox.isSelected());
 
 			ExecutorService executorService = Executors.newFixedThreadPool(1);
 			executorService.execute(simulationTask);
 			executorService.shutdown();
 		} else {
-			startStopButton.setText("Start simulation");
 			simulationTask.running = false;
+			startStopButton.setText("Start simulation");
+			annCheckbox.setDisable(false);
 		}
 	}
 
@@ -147,6 +149,12 @@ public class ConwayController implements Initializable {
 		ExecutorService executorService = Executors.newFixedThreadPool(1);
 		executorService.execute(trainTask);
 		executorService.shutdown();
+	}
+
+	@FXML
+	private void randomizeGrid(ActionEvent event) {
+		conwayGrid.fillRandom();
+		drawCells();
 	}
 
 	@FXML
