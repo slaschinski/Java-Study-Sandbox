@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -31,6 +32,9 @@ public class ConwayController implements Initializable {
 
 	@FXML
 	private Button startStopButton;
+
+	@FXML
+	private CheckBox annCheckbox;
 
 	@FXML
 	private Canvas canvas;
@@ -105,7 +109,7 @@ public class ConwayController implements Initializable {
 	    
 		if (simulationTask == null || !simulationTask.running) {
 			startStopButton.setText("Stop simulation");
-			simulationTask = new SimulationTask(this, conwayGrid);
+			simulationTask = new SimulationTask(this, conwayGrid, annCheckbox.isSelected());
 
 			ExecutorService executorService = Executors.newFixedThreadPool(1);
 			executorService.execute(simulationTask);
@@ -114,6 +118,17 @@ public class ConwayController implements Initializable {
 			startStopButton.setText("Start simulation");
 			simulationTask.running = false;
 		}
+	}
+
+	@FXML
+	private void trainANN(ActionEvent event) {
+		conwayGrid.trainANN();
+	}
+
+	@FXML
+	private void clearGrid(ActionEvent event) {
+		conwayGrid.clear();
+		drawCells();
 	}
 
 	public void drawCells() {

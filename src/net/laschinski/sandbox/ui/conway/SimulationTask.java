@@ -7,16 +7,22 @@ class SimulationTask extends Task<Integer> {
 	public boolean running = true;
 	private ConwayController controller;
 	private Grid conwayGrid;
+	private boolean useANN;
 	
-	SimulationTask(ConwayController controller, Grid conwayGrid) {
+	SimulationTask(ConwayController controller, Grid conwayGrid, boolean useANN) {
 		this.controller = controller;
 		this.conwayGrid = conwayGrid;
+		this.useANN = useANN;
 	}
 
 	@Override
 	protected Integer call() throws Exception {
 		while (running) {
-			conwayGrid.calculateNextState();
+			if (useANN) {
+				conwayGrid.calculateNextStateWithANN();
+			} else {
+				conwayGrid.calculateNextStateWithAlgorithm();
+			}
 			controller.drawCells();
 			try {
 				Thread.sleep(500);
