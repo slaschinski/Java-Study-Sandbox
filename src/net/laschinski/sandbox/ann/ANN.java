@@ -2,50 +2,51 @@ package net.laschinski.sandbox.ann;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Sven Laschinski
+ *
+ */
 public class ANN {
 
-	/// <summary>
-	/// Learning rate
-	/// </summary>
+	/**
+	 * Learning rate
+	 */
 	private double alpha;
-	/// <summary>
-	/// Learning rate decay (alpha *= alphaDecay)
-	/// Also decays lambda by the same rate.
-	/// </summary>
+	/**
+	 * Learning rate decay (alpha *= alphaDecay) Also decays lambda by the same
+	 * rate.
+	 */
 	private double alphaDecay;
-	/// <summary>
-	/// Decay of weights (weight -= weight * lambda)
-	/// </summary>
+	/**
+	 * Decay of weights (weight -= weight * lambda)
+	 */
 	private double lambda;
-	/// <summary>
-	/// Number of expected inputs
-	/// </summary>
+	/**
+	 * Number of expected inputs
+	 */
 	private int numInputs;
-	/// <summary>
-	/// A list containing all layer objects, which contain the neurons
-	/// </summary>
+	/**
+	 * A list containing all layer objects, which contain the neurons
+	 */
 	ArrayList<Layer> layers = new ArrayList<>();
 
-	/// <summary>
-	/// This constructor prepared the neural network by setting the hyperparameters,
-	/// as well as the inputs
-	/// and prepares the visualization of the neural net, if an inworld spawner for
-	/// the neurons is given.
-	/// Alpha indicates the learning rate, while it will be multiplied with
-	/// alphaDecay after every learning
-	/// cycle to gradually decay the learning rate. alphaDecay = 1.0 disables the
-	/// decay.
-	/// Lambda indicates a rate by which the neurons weights decay every learning
-	/// cycle. This is a technique
-	/// to combat overfitting and exploding gradients.
-	/// </summary>
-	/// <param name="numberOfInputs">An integer indicating the number of inputs to
-	/// expect</param>
-	/// <param name="alpha">A double representing the learning rate</param>
-	/// <param name="alphaDecay">A double to reduce alpha (and lambda) over time by
-	/// multiplication</param>
-	/// <param name="lambda">A double to reduce weights by the amount of lambda
-	/// multiplied with the actual weight</param>
+	/**
+	 * This constructor prepared the neural network by setting the hyperparameters,
+	 * as well as the inputs and prepares the visualization of the neural net, if an
+	 * inworld spawner for the neurons is given. Alpha indicates the learning rate,
+	 * while it will be multiplied with alphaDecay after every learning cycle to
+	 * gradually decay the learning rate. alphaDecay = 1.0 disables the decay.
+	 * Lambda indicates a rate by which the neurons weights decay every learning
+	 * cycle. This is a technique to combat overfitting and exploding gradients.
+	 * 
+	 * @param numberOfInputs An integer indicating the number of inputs to expect
+	 * @param alpha          A double representing the learning rate
+	 * @param alphaDecay     A double to reduce alpha (and lambda) over time by
+	 *                       multiplication
+	 * @param lambda         A double to reduce weights by the amount of lambda
+	 *                       multiplied with the actual weight
+	 */
 	public ANN(int numberOfInputs, double alpha, double alphaDecay, double lambda) {
 		this.numInputs = numberOfInputs;
 		this.alpha = alpha;
@@ -53,14 +54,15 @@ public class ANN {
 		this.lambda = lambda;
 	}
 
-	/// <summary>
-	/// Adds one layer to the neural network. It's an output layer as long as you
-	/// don't add another layer.
-	/// </summary>
-	/// <param name="numberOfNeurons">An integer with the number of neurons this
-	/// layer will contain</param>
-	/// <param name="activationFunction">The name of the activation function to use.
-	/// Defaults to ReLU.</param>
+	/**
+	 * Adds one layer to the neural network. It's an output layer as long as you
+	 * don't add another layer.
+	 * 
+	 * @param numberOfNeurons    An integer with the number of neurons this layer
+	 *                           will contain
+	 * @param activationFunction The name of the activation function to use.
+	 *                           Defaults to ReLU.
+	 */
 	public void AddLayer(int numberOfNeurons, String activationFunction) {
 		int numberOfInputs;
 
@@ -82,11 +84,12 @@ public class ANN {
 		AddLayer(numberOfNeurons, activationFunction);
 	}
 
-	/// <summary>
-	/// Calculates the ANN outputs for the given inputs.
-	/// </summary>
-	/// <param name="inputValues">A list of double values used as inputs</param>
-	/// <returns>A list a double values calculated by the ANN</returns>
+	/**
+	 * Calculates the ANN outputs for the given inputs.
+	 * 
+	 * @param inputValues A list of double values used as inputs
+	 * @return A list a double values calculated by the ANN
+	 */
 	public ArrayList<Double> Predict(ArrayList<Double> inputValues) {
 		ArrayList<Double> inputs;
 		ArrayList<Double> outputs = new ArrayList<>();
@@ -124,15 +127,16 @@ public class ANN {
 		return outputs;
 	}
 
-	/// <summary>
-	/// Trains the ANN by giving inputs and the desired output values for those
-	/// inputs.
-	/// </summary>
-	/// <param name="inputValues">A list of double values used as inputs</param>
-	/// <param name="desiredOutputValues">A list of double values which mark the
-	/// desired outputs</param>
-	/// <returns>A list of double values which are the calculated output before
-	/// training</returns>
+	/**
+	 * Trains the ANN by giving inputs and the desired output values for those
+	 * inputs.
+	 * 
+	 * @param inputValues         A list of double values used as inputs
+	 * @param desiredOutputValues A list of double values which mark the desired
+	 *                            outputs
+	 * @return A list of double values which are the calculated output before
+	 *         training
+	 */
 	public ArrayList<Double> Train(ArrayList<Double> inputValues, ArrayList<Double> desiredOutputValues) {
 		ArrayList<Double> outputs = Predict(inputValues);
 
@@ -144,15 +148,16 @@ public class ANN {
 		return outputs;
 	}
 
-	/// <summary>
-	/// Trains the ANN by giving a batch of input values and corresponding desired
-	/// output values.
-	/// All calculated deltas will be summed up before the weights are updated.
-	/// </summary>
-	/// <param name="inputValues">A list of a list containing doubles which are used
-	/// as inputs</param>
-	/// <param name="desiredOutputValues">A list of a list containing doubles which
-	/// contain the desired output values</param>
+	/**
+	 * Trains the ANN by giving a batch of input values and corresponding desired
+	 * output values. All calculated deltas will be summed up before the weights are
+	 * updated.
+	 * 
+	 * @param inputValues         A list of a list containing doubles which are used
+	 *                            as inputs
+	 * @param desiredOutputValues A list of a list containing doubles which contain
+	 *                            the desired output values
+	 */
 	public void TrainBatch(ArrayList<ArrayList<Double>> inputValues, ArrayList<ArrayList<Double>> desiredOutputValues) {
 		boolean sumDeltas = false;
 
@@ -171,10 +176,10 @@ public class ANN {
 		UpdateWeights();
 	}
 
-	/// <summary>
-	/// Actually updates the weights and reduces the alpha and lambda values if
-	/// decay is set.
-	/// </summary>
+	/**
+	 * Actually updates the weights and reduces the alpha and lambda values if decay
+	 * is set.
+	 */
 	public void UpdateWeights() {
 		// step through every layer
 		for (int i = 0; i < layers.size(); i++) {
@@ -185,21 +190,21 @@ public class ANN {
 		}
 
 		// decay alpha and lambda on the same rate, to prevent smaller alpha than lambda
-		// otherweise weights would decay faster than they are relearned, at some point
+		// otherwise weights would decay faster than they are relearned, at some point
 		alpha *= alphaDecay;
 		lambda *= alphaDecay;
 	}
 
-	/// <summary>
-	/// Calculates the gradients for gradient descent and saves them in the neuron
-	/// objects.
-	/// The gradient is calculated based on the desired outputs in contrast to the
-	/// actual outputs.
-	/// </summary>
-	/// <param name="outputs">A list of doubles containing the actual outputs of the
-	/// neural network</param>
-	/// <param name="desiredOutputValues">A list of doubles containing the desired
-	/// outputs of the neural network</param>
+	/**
+	 * Calculates the gradients for gradient descent and saves them in the neuron
+	 * objects. The gradient is calculated based on the desired outputs in contrast
+	 * to the actual outputs.
+	 * 
+	 * @param outputs             A list of doubles containing the actual outputs of
+	 *                            the neural network
+	 * @param desiredOutputValues A list of doubles containing the desired outputs
+	 *                            of the neural network
+	 */
 	private void calculateGradients(ArrayList<Double> outputs, ArrayList<Double> desiredOutputValues) {
 		// step through every layer BACKWARDS
 		for (int i = layers.size() - 1; i >= 0; i--) {
@@ -229,21 +234,20 @@ public class ANN {
 		}
 	}
 
-	/// <summary>
-	/// Calculates the deltas (differences) of current weights and corresponding
-	/// gradients and saves them into
-	/// the neuron objects.
-	/// The boolean sumDeltas need to be set to false to get the actual deltas. This
-	/// should be the case for online
-	/// learning or the first dataset of a batch. For every other dataset of a batch
-	/// sumDelta should be set to true.
-	/// </summary>
-	/// <param name="outputs">A list of doubles containing the actual outputs of the
-	/// neural network</param>
-	/// <param name="desiredOutputValues">A list of doubles containing the desired
-	/// outputs of the neural network</param>
-	/// <param name="sumDeltas">A boolean indicating whether deltas should be added
-	/// to the sum or overwrite the sum</param>
+	/**
+	 * Calculates the deltas (differences) of current weights and corresponding
+	 * gradients and saves them into the neuron objects. The boolean sumDeltas need
+	 * to be set to false to get the actual deltas. This should be the case for
+	 * online learning or the first dataset of a batch. For every other dataset of a
+	 * batch sumDelta should be set to true.
+	 * 
+	 * @param outputs             A list of doubles containing the actual outputs of
+	 *                            the neural network
+	 * @param desiredOutputValues A list of doubles containing the desired outputs
+	 *                            of the neural network
+	 * @param sumDeltas           A boolean indicating whether deltas should be
+	 *                            added to the sum or overwrite the sum
+	 */
 	public void calculateDeltas(ArrayList<Double> outputs, ArrayList<Double> desiredOutputValues, boolean sumDeltas) {
 		// step through every layer
 		for (int i = 0; i < layers.size(); i++) {
