@@ -10,13 +10,20 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import net.laschinski.sandbox.conway.Grid;
@@ -122,7 +129,24 @@ public class ConwayController implements Initializable {
 
 	@FXML
 	private void trainANN(ActionEvent event) {
-		conwayGrid.trainANN();
+		LineChart<Number, Number> chart = new LineChart<Number, Number>(new NumberAxis(), new NumberAxis());
+		LineChart.Series<Number, Number> series = new Series<>();
+		chart.getData().add(series);
+		chart.setLegendVisible(false);
+		chart.setCreateSymbols(false);
+		
+		Scene annChartScene = new Scene(chart, 1000, 200);
+	    Stage annChartStage = new Stage();
+	    annChartStage.setTitle("ANN training...");
+	    annChartStage.setScene(annChartScene);
+	    annChartStage.initStyle(StageStyle.UTILITY);
+	    annChartStage.initModality(Modality.APPLICATION_MODAL);
+	    annChartStage.show();
+	    
+	    TrainTask trainTask = new TrainTask(series, conwayGrid.getCellANN());
+		ExecutorService executorService = Executors.newFixedThreadPool(1);
+		executorService.execute(trainTask);
+		executorService.shutdown();
 	}
 
 	@FXML

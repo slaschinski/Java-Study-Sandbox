@@ -55,12 +55,12 @@ class LearnTask extends Task<Integer> {
 			}
 
 			final int iteration = i;
-			final double SSE = sumSquareError;
+			final double sse = sumSquareError;
 
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					series.getData().add(new XYChart.Data<Number, Number>(iteration, SSE));
+					series.getData().add(new XYChart.Data<Number, Number>(iteration, sse));
 				}
 			});
 		}

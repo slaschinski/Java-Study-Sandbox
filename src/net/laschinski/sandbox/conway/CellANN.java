@@ -38,23 +38,6 @@ public class CellANN implements CellSimulation {
 		}
 		return false;
 	}
-	
-	public void fullyTrainAnn() {
-		double sse;
-		for (int i = 0; i < 1000; i++) {
-			sse = trainByAlgorithm();
-			if (i % 10 == 0) {
-				System.out.println("SSE: " + sse);
-			}
-		}
-		// does not quite work - probably too few examples and/or errors in data
-		/*for (int i = 0; i < 10000; i++) {
-			sse = trainEpoch();
-			if (i % 100 == 0) {
-				System.out.println("SSE: " + sse);
-			}
-		}*/
-	}
 
 	public double trainEpoch() {
 		ArrayList<Double> inputValues = new ArrayList<>();
@@ -76,11 +59,11 @@ public class CellANN implements CellSimulation {
 		return sumSquareError;
 	}
 	
-	public double trainByAlgorithm() {
+	public double trainByAlgorithm(int iterations) {
 		CellAlgorithm cellAlgo = new CellAlgorithm();
 		double sumSquareError = 0.0d;
 		
-		for (int i = 0; i < 500; i++) {
+		for (int i = 0; i < iterations; i++) {
 			boolean[] inputs = new boolean[9];
 			ArrayList<Double> inputValues = new ArrayList<>();
 			ArrayList<Double> desiredOutputValues = new ArrayList<>();

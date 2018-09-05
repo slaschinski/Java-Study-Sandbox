@@ -96,8 +96,7 @@ public class Grid {
 		}
 	}
 	
-	public void trainANN() {
-		CellANN ann = (CellANN)cellANN;
-		ann.fullyTrainAnn();
+	public CellANN getCellANN() {
+		return (CellANN)cellANN;
 	}
 }
