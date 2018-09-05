@@ -26,7 +26,7 @@ public class XORController implements Initializable {
 		XYChart.Series<Number, Number> series = new Series<Number, Number>();
 		chart.getData().add(series);
 
-		LearnTask task = new LearnTask(series);
+		TrainTask task = new TrainTask(series);
 
 		task.setOnRunning((succeesesEvent) -> {
 		});

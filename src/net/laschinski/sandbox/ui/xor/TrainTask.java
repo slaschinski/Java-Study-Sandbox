@@ -9,10 +9,10 @@ import javafx.scene.chart.XYChart.Series;
 import net.laschinski.sandbox.ann.ANN;
 import net.laschinski.sandbox.ann.ANNBuilder;
 
-class LearnTask extends Task<Integer> {
+class TrainTask extends Task<Integer> {
 	Series<Number, Number> series;
 
-	LearnTask(Series<Number, Number> series) {
+	TrainTask(Series<Number, Number> series) {
 		this.series = series;
 	}
 
